@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hunilee.dao.UserMapper">
+
+    <resultMap id="UserBaseMap" type="User">
+        <id property="user_id" column="user_id" jdbcType="INTEGER"/>
+        <result property="device" column="device" jdbcType="VARCHAR"/>
+        <result property="mac" column="mac" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 登录的功能 -->
+    <select id="login" resultType="User" parameterType="String">
+        select * from hf_user where device = #{device}
+    </select>
+
+    <!-- 注册的功能 -->
+    <insert id="insert" parameterType="User">
+        insert into
+        hf_user(
+          device,
+          mac
+        )
+        values(
+          #{device},
+          #{mac}
+        )
+    </insert>
+
+    <!-- 根据用户名查询 -->
+    <select id="findByName" parameterType="String" resultType="User">
+        select device from hf_user where device = #{device}
+    </select>
+</mapper>

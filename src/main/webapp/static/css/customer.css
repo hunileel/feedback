@@ -1,0 +1,75 @@
+header{
+  display: flex;
+  font-size: .28rem;
+  height: .7rem;
+  line-height: .7rem;
+  border-bottom: .02rem solid #dcdee2;
+}
+header .u-header-logo{
+  flex: 0 1 auto;
+  text-decoration: none;
+  color: #c5c8ce;
+  font-size: .35rem;
+  margin-left: 0.16rem;
+}
+header .u-header-title{
+  flex: 1 1 auto;
+  text-align: center;
+  margin: 0;
+}
+.m-btn-wrapper{
+  width: 100%;
+  display: flex;
+  box-sizing: border-box;
+  padding: 0 15%;
+  margin-top: .2rem;
+}
+.m-btn-wrapper button{
+  border: none;
+  outline: none;
+  text-decoration: none;
+  background-color: #c5c8ce;
+  border: .02rem solid #dcdee2;
+  font-size: .28rem;
+  width: 50%;
+  line-height: .5rem;
+  cursor:pointer;
+  -webkit-tap-highlight-color: transparent;
+  color: #fff
+}
+.m-btn-wrapper button.btn-l{
+  border-top-left-radius: .1rem;
+  border-bottom-left-radius: .1rem;
+  border-right: none;
+}
+.m-btn-wrapper button.btn-r{
+  border-top-right-radius: .1rem;
+  border-bottom-right-radius: .1rem;
+}
+.m-btn-wrapper button:active,
+.m-btn-wrapper button.active:active{
+  background-color: #7B72E9;
+}
+.m-btn-wrapper button.active{
+  background-color: #fff;
+  color: #000;
+}
+
+ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+ul li{
+  display: block;
+  box-sizing: border-box;
+  margin: .2rem;
+  padding: .16rem .09rem;
+  font-size: .28rem;
+  border: .02rem solid #dcdee2;
+  border-radius: .2rem;
+  letter-spacing: .06rem;
+}
+ul li.active{
+  color: #c5c8ce;
+}

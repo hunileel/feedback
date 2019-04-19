@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hunilee.dao.FeedbackMapper">
+
+    <resultMap id="WordsBaseMap" type="Feedback">
+        <id column="fb_id" property="fb_id" jdbcType="INTEGER"/>
+        <id column="user_id" property="user_id" jdbcType="INTEGER"/>
+        <result column="fb_name" property="fb_name" jdbcType="VARCHAR"/>
+        <result column="fb_date" property="fb_date" jdbcType="VARCHAR"/>
+        <result column="fb_content" property="fb_content" jdbcType="VARCHAR"/>
+        <result column="fb_for_reply" property="fb_for_reply" jdbcType="VARCHAR"/>
+         <result column="fb_for_label" property="fb_for_label" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="ReplyBaseMap" type="Reply">
+        <id column="re_id" property="re_id" jdbcType="INTEGER"/>
+        <result column="re_name" property="re_name" jdbcType="VARCHAR"/>
+        <result column="re_date" property="re_date" jdbcType="VARCHAR"/>
+        <result column="re_content" property="re_content" jdbcType="VARCHAR"/>
+        <result column="re_for_name" property="re_for_name" jdbcType="VARCHAR"/>
+        <result column="re_for_words" property="re_for_words" jdbcType="VARCHAR"/>
+    </resultMap>
+    
+   <!-- 查询（未clean）总记录数 -->
+    <select id="selectCount" resultType="int">
+        select count(*) from hf_feedback 
+    </select>
+
+    <!-- 分页查询 -->
+    <select id="findByPage" resultMap="WordsBaseMap" parameterType="Map">
+        select * from hf_feedback
+        
+        <if test="start != null and size != null">
+            limit #{start},#{size}
+        </if>
+    </select>
+
+    <!-- 多条件查询 -->
+    <select id="findConByPage" resultMap="WordsBaseMap" parameterType="Map">
+        select * from hf_feedback
+        <!-- 表示我进入的是文章列表页面 -->
+        <if test="start != null and size != null">
+            limit #{start},#{size}
+        </if>
+    </select>
+
+  
+
+    <!-- 保存留言信息 -->
+    <insert id="saveWords" parameterType="Feedback">
+        insert into hf_feedback(
+          fb_name,
+          user_id,
+          fb_date,
+          fb_content,
+          fb_for_reply,
+          pic1,
+          pic2,
+          pic3,
+          pic4,
+          pic5,
+          pic6,
+          pic7,
+          pic8,
+          pic9
+        )
+        values(
+          #{fb_name},
+          #{user_id},
+          #{fb_date},
+          #{fb_content},
+          #{fb_for_reply},
+          #{pic1},
+          #{pic2},
+          #{pic3},
+          #{pic4},
+          #{pic5},
+          #{pic6},
+          #{pic7},
+          #{pic8},
+          #{pic9}
+        )
+    </insert>
+    
+    <!-- 更新留言信息 -->
+    <update id="updateFeedback" parameterType="Feedback" >
+          update hf_feedback set
+          fb_for_reply  = #{fb_for_reply}
+          where fb_id = #{fb_id}
+    </update>
+    
+     <!-- 根据ID查询 -->
+    <select id="findById" parameterType="int" resultType="Feedback">
+        select * from hf_feedback where fb_id = #{fb_id}
+    </select>
+
+    <!-- 保存回复信息 -->
+    <insert id="saveReply" parameterType="Reply">
+        insert into hf_reply(
+          re_name,
+          re_date,
+          re_content,
+          re_for_name,
+          re_for_words,
+          re_for_reply,
+          pic1,
+          pic2,
+          pic3,
+          pic4,
+          pic5,
+          pic6,
+          pic7,
+          pic8,
+          pic9
+        )
+        values(
+          #{re_name},
+          #{re_date},
+          #{re_content},
+          #{re_for_name},
+          #{re_for_words},
+          #{re_for_reply},
+          #{pic1},
+          #{pic2},
+          #{pic3},
+          #{pic4},
+          #{pic5},
+          #{pic6},
+          #{pic7},
+          #{pic8},
+          #{pic9}
+        )
+    </insert>
+
+    <!-- 查询所有留言信息 -->
+    <select id="findByWords" resultMap="WordsBaseMap">
+        select * from hf_feedback
+    </select>
+    
+    <!-- 根据user_id查询所有留言信息 -->
+    <select id="findWordsById"  parameterType="int" resultMap="WordsBaseMap">
+        select * from hf_feedback
+        where user_id = #{user_id}
+    </select>
+    
+     <!-- 根据fb_id查询所有留言信息 -->
+    <select id="findWordsByfbId"  parameterType="int" resultMap="WordsBaseMap">
+        select * from hf_feedback
+        where fb_id = #{fb_id}
+    </select>
+
+    <!-- 查询所有回复信息 -->
+    <select id="findByReply" resultMap="ReplyBaseMap">
+        select * from hf_reply
+    </select>
+    
+    <!-- 查询所有标注问题 -->
+    <select id="keynormal" resultMap="WordsBaseMap">
+        select * from hf_feedback
+        where fb_for_label = 1
+    </select>
+    
+    <!-- 根据fb_id标记问题 -->
+    <update id="sign" parameterType="Feedback">
+          update hf_feedback set
+          fb_for_label= #{fb_for_label}
+          where fb_id = #{fb_id}
+    </update>
+    
+</mapper>

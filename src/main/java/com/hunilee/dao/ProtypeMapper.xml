@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hunilee.dao.ProtypeMapper" >
+  <resultMap id="BaseResultMap" type="com.hunilee.bean.Protype" >
+    <id column="n_id" property="nId" jdbcType="INTEGER" />
+    <result column="n_name" property="nName" jdbcType="VARCHAR" />
+    <result column="n_type" property="nType" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  
+  <sql id="Base_Column_List" >
+    n_id, n_name, n_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    *
+    from hf_protype
+    where n_id = #{nId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from hf_protype
+    where n_id = #{nId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hunilee.bean.Protype" >
+    insert into hf_protype (n_id, n_name, n_type
+      )
+    values (#{nId,jdbcType=INTEGER}, #{nName,jdbcType=VARCHAR}, #{nType,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hunilee.bean.Protype" >
+    insert into hf_protype
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="nId != null" >
+        n_id,
+      </if>
+      <if test="nName != null" >
+        n_name,
+      </if>
+      <if test="nType != null" >
+        n_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="nId != null" >
+        #{nId,jdbcType=INTEGER},
+      </if>
+      <if test="nName != null" >
+        #{nName,jdbcType=VARCHAR},
+      </if>
+      <if test="nType != null" >
+        #{nType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hunilee.bean.Protype" >
+    update hf_protype
+    <set >
+      <if test="nName != null" >
+        n_name = #{nName,jdbcType=VARCHAR},
+      </if>
+      <if test="nType != null" >
+        n_type = #{nType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where n_id = #{nId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hunilee.bean.Protype" >
+    update hf_protype
+    set n_name = #{nName,jdbcType=VARCHAR},
+      n_type = #{nType,jdbcType=VARCHAR}
+    where n_id = #{nId,jdbcType=INTEGER}
+  </update>
+  
+   <!-- 查询所有留言信息 -->
+    <select id="allProype" resultMap="BaseResultMap">
+        select * from hf_protype
+    </select>
+    
+    <!-- 查询总记录数 -->
+    <select id="selectCount" resultType="int">
+        select count(*) from hf_protype 
+    </select>
+
+    <!-- 分页查询 -->
+    <select id="findByPage" resultMap="BaseResultMap" parameterType="Map">
+        select * from hf_protype
+        <if test="start != null and size != null">
+            limit #{start},#{size}
+        </if>
+    </select>
+
+    <!-- 多条件查询 -->
+    <select id="findConByPage" resultMap="BaseResultMap" parameterType="Map">
+        select * from hf_protype
+        <!-- 表示我进入的是文章列表页面 -->
+        <if test="start != null and size != null">
+            limit #{start},#{size}
+        </if>
+    </select>
+    
+    <select id="findAllPage" resultMap="BaseResultMap" parameterType="Map">
+        SELECT * FROM hf_protype
+        <if test="before != null and after != null">
+            LIMIT #{before},#{after}
+        </if>
+    </select>
+    <select id="count" resultType="int">
+        select count(*) from hf_protype
+    </select>
+</mapper>
